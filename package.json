@@ -6,7 +6,8 @@
   "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon load_balancing.js"
+    "main_server": "node index.js",
+    "dev": "node load_balancing.js && npm run main_server"
   },
   "keywords": [],
   "author": "",

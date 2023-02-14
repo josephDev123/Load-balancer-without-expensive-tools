@@ -5,15 +5,15 @@ import axios from 'axios'
 const loaderInstance = express();
 dotenv.config();
 //  console.log(process.env)
-const PORT = process.env.LOAD_BALANCE_PORT;
-const servers = ['http://localhost:2000/', 'http://localhost:3000/', 'http://localhost:4000/' ]
+const PORT = process.env.LOAD_BALANCE_PORT || 8000;
+const servers = ['http://localhost:2000/', 'http://localhost:3000/', 'http://localhost:4000/' ];
 
 let server_index = 0;
 
 const proxy_handler= async (req, res)=>{
     const {header, url, query, body, method} = req;
    
-     server_index === servers.length-1 ? server_index = 0 : server_index++
+     server_index ===( servers.length-1) ? server_index = 0 : server_index++
 
      const server = servers[server_index];
     try{
@@ -21,7 +21,7 @@ const proxy_handler= async (req, res)=>{
             header:{header},
             method:method,
             url:`${server}${url}`,
-            body:body,
+            data:body,
             params:query
         })
         if(server_req.statusText === 'OK'){
@@ -33,6 +33,7 @@ const proxy_handler= async (req, res)=>{
     }
 }
 
+// request and handler
 loaderInstance.use((req, res)=>proxy_handler(req, res));
 
 loaderInstance.listen(PORT, ()=> console.log('proxy_server listening to port '+PORT))

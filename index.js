@@ -10,16 +10,21 @@ const app = express();
 const app2 = express();
 const app3 = express();
 
-app.get('/', (req, res)=>{
+app.get('*', (req, res)=>{
     console.log('hello world 1')
+    res.send('hello world 1')
     res.end()
 });
-app2.get('/', (req, res)=>{
+
+app2.get('*', (req, res)=>{
     console.log('hello world 2')
+    res.send('hello world 2')
     res.end()
 })
-app3.get('/', (req, res)=>{
+
+app3.get('*', (req, res)=>{
     console.log('hello world 3')
+    res.send('hello world 3')
     res.end()
 })
 
